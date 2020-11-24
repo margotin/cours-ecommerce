@@ -7,13 +7,14 @@
 {% block body %}
     <h1>Nos produits phares</h1>
     <div class="row">
-        {% for i in 1..3 %}    
+        {% for product in products %}    
         <div class="col">
             <div class="card">
-                <img src="https://picsum.photos/200/200" class="img-fluid" alt="photo du produit">
+                <img src="{{ product.mainPicture }}" class="img-fluid" alt="photo du produit">
                 <div class="card-body">
-                    <h4 class="card-title">Chaise en bois</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque ut dicta nulla molestias alias iure, eveniet magni necessitatibus vitae architecto obcaecati nihil quia esse asperiores delectus id porro. Dolor, aliquam.</p>
+                    <h4 class="card-title">{{ product.name }} ({{ product.price /100 }} &euro;)</h4>
+                    <span class="badge badge-info mb-2">{{ product.category.name }}</span>
+                    <p class="card-text">{{ product.shortDescription }}</p>
                     <a href="#" class="btn btn-primary btn-sm">Détails</a>
                     <a href="#" class="btn btn-success btn-sm">Ajouter</a>
                 </div>
