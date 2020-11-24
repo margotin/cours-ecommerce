@@ -23,6 +23,9 @@
     "doctrine/common": {
         "version": "3.0.2"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.4.4"
+    },
     "doctrine/dbal": {
         "version": "2.12.1"
     },
@@ -39,6 +42,18 @@
             "./config/packages/prod/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "e5b542d4ef47d8a003c91beb35650c76907f7e53"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -78,6 +93,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.1"
+    },
     "laminas/laminas-code": {
         "version": "3.5.0"
     },
@@ -86,6 +104,12 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
+    },
+    "liorchamla/faker-prices": {
+        "version": "v1.0.1"
+    },
+    "mbezhanov/faker-provider-collection": {
+        "version": "1.2.1"
     },
     "nikic/php-parser": {
         "version": "v4.10.2"
