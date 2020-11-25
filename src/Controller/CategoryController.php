@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
             $category->setSlug(strtolower($sluggerInterface->slug($category->getName())));
             $entityManagerInterface->persist($category);
@@ -47,7 +47,7 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $category->setSlug(strtolower($sluggerInterface->slug($category->getName())));
             $entityManagerInterface->flush();
 
