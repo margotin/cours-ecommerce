@@ -22,9 +22,9 @@
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }}</td>
                     <td>
-                        <a href="{{ path('cart_add', { 'id': item.product.id }) }}?returnToCart=true" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
-                            {{ item.quantity }}
-                        <a href="{{ path('cart_decrement', { 'id': item.product.id }) }}" class="btn btn-sm btn-primary"><i class="fas fa-minus"></i></a> 
+                        <a href="{{ path('cart_add', { 'id': item.product.id }) }}?returnToCart=true" class="badge badge-primary"><i class="fas fa-plus"></i> </a>
+                            <strong> {{ item.quantity }} </strong>
+                        <a href="{{ path('cart_decrement', { 'id': item.product.id }) }}" class="badge badge-primary"> <i class="fas fa-minus"></i></a> 
                     </td>
                     <td>{{ item.total }}</td>
                     <td><a href="{{ path('cart_delete', {'id':item.product.id} ) }}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a></td>
@@ -38,6 +38,19 @@
             </tr>
         </tfoot>
     </table>
+
+    <hr>
+    {% if app.user %}
+        <h2>Confirmez votre commande en remplissant ce formulaire</h2>
+        {{ form_start(confirmationForm, { 'action': path('purchase_confirm') }) }}
+        {{ form_widget(confirmationForm) }}
+        <button type="submit" class="btn btn-success">Commander</button>
+        {{ form_end(confirmationForm) }}
+    {% else %}
+        <h2>Vous devez être connecté pour confirmer cette commande</h2>
+        <a href="{{ path('security_login') }}" class="btn btn-success">Connexion</a> ou <a href="#">Créer un compte</a>
+    {% endif %}
+
  {% else %}
      <h4>Le panier est vide !</h4>
  {% endif %}
