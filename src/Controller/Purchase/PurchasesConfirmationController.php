@@ -19,14 +19,14 @@ class PurchasesConfirmationController extends AbstractController
     public function __construct(CartService $cartService, PurchasePersister $purchasePersister)
     {
         $this->cartService = $cartService;
-        $this->persister = $purchasePersister;
+        $this->purchasePersister = $purchasePersister;
     }
 
     /**
      * @Route("/purchase/confirm", name="purchase_confirm")
      * @IsGranted("ROLE_USER", message="Vous devez être connecté pour confirmer une commande")
      */
-    public function confirm(Request $request /*, FlashBagInterface $flashBag*/)
+    public function confirm(Request $request)
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
@@ -47,9 +47,8 @@ class PurchasesConfirmationController extends AbstractController
 
         $this->purchasePersister->storePurchase($purchase);
 
-        $this->cartService->empty();
-
-        $this->addFlash('success', 'La commande a bien été enregistrée');
-        return $this->redirectToRoute('purchase_index');
+        return $this->redirectToRoute('purchase_payment_form', [
+            'id' => $purchase->getId()
+        ]);
     }
 }
