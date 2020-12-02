@@ -4,24 +4,25 @@ namespace App\Controller\Purchase;
 
 use App\Entity\Purchase;
 use App\Cart\CartService;
+use App\Event\PurchaseSuccessEvent;
 use App\Repository\PurchaseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PurchasePaymentSuccessController extends AbstractController
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
+    private CartService $cartService;
+    private EventDispatcherInterface $eventDispatcher;
 
-    /** @var CartService */
-    private $cartService;
-
-    public function __construct(EntityManagerInterface $entityManager, CartService $cartService)
+    public function __construct(EntityManagerInterface $entityManager, CartService $cartService, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->cartService = $cartService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /** 
@@ -43,6 +44,9 @@ class PurchasePaymentSuccessController extends AbstractController
         $purchase->setStatus(Purchase::STATUS_PAID);
         $this->entityManager->flush();
         $this->cartService->empty();
+
+        $purchaseEvent = new PurchaseSuccessEvent($purchase);
+        $this->eventDispatcher->dispatch($purchaseEvent, 'purchase.success');
 
         $this->addFlash("success", "la commande a été confirmée et payée !");
         return $this->redirectToRoute('purchase_index');
