@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=PurchaseRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Purchase
 {
@@ -88,7 +89,7 @@ class Purchase
      * @ORM\PreFlush
      */
     public function preFlush()
-    {
+    {        
         $total = 0;
         foreach ($this->purchaseItems as $item) {
             $total += $item->getTotal();
