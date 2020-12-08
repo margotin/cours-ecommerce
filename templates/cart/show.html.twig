@@ -20,13 +20,13 @@
             {% for item in items %}
                 <tr>
                     <td>{{ item.product.name }}</td>
-                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.product.price | amount}}</td>
                     <td>
                         <a href="{{ path('cart_add', { 'id': item.product.id }) }}?returnToCart=true" class="badge badge-primary"><i class="fas fa-plus"></i> </a>
                             <strong> {{ item.quantity }} </strong>
                         <a href="{{ path('cart_decrement', { 'id': item.product.id }) }}" class="badge badge-primary"> <i class="fas fa-minus"></i></a> 
                     </td>
-                    <td>{{ item.total }}</td>
+                    <td>{{ item.total | amount }}</td>
                     <td><a href="{{ path('cart_delete', {'id':item.product.id} ) }}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a></td>
                 </tr>       
             {% endfor %}
@@ -34,7 +34,7 @@
         <tfoot>
             <tr>
                 <td colspan="3">Total : </td>
-                <td colspan="2">{{ total }}</td>
+                <td colspan="2">{{ total | amount }}</td>
             </tr>
         </tfoot>
     </table>
